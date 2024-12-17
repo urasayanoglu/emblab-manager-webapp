@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Page Not Found!{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'home/about.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="home-container">
+        <h1>We couldn't find the page you're looking for!</h1>
+        <p class="intro-text">Sorry about that! If you think this is a mistake, please let us know.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">Return to Home</a>
+    </div>
+{% endblock %}
