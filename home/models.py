@@ -40,3 +40,33 @@ class Announcement(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+
+class BackgroundImage(models.Model):
+    """
+    Model representing a background image for the landing page.
+
+    Attributes:
+        image (ImageField): The uploaded background image file.
+        description (str): A short description of the image. Optional.
+    """
+    image = models.ImageField(upload_to='images/home-images/')
+    description = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        """
+        Returns the string representation of the background image, which is its description.
+        If no description is provided, returns a placeholder text.
+        """
+        return self.description if self.description else "Background Image"
+    
+    class Meta:
+        """
+        Metadata for the BackgroundImage model.
+
+        Attributes:
+            verbose_name (str): The singular name of the model, used in the Django admin interface.
+            verbose_name_plural (str): The plural name of the model, used in the Django admin interface.
+        """
+        verbose_name = "Background Image"
+        verbose_name_plural = "Background Images"
