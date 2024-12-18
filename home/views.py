@@ -28,6 +28,7 @@ def home(request):
         'background_images': background_images,
     })
 
+
 def announcement_detail(request, slug):
     """
         Renders the detail page for a specific announcement.
@@ -50,3 +51,21 @@ def announcement_detail(request, slug):
 
     # Render the announcement detail page with the fetched announcement.
     return render(request, 'home/announcement-detail.html', {'announcement': announcement})
+
+
+def about(request):
+    """
+    Renders the About page of the TUAS Embedded Lab Manager.
+
+    The About page provides an overview of the application, its features,
+    and guidance on how to use its functionalities. It is accessible via the
+    navigation bar by clicking the name of the web application.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Template:
+        home/about.html
+    """
+    # Render the about page template.
+    return render(request, 'home/about.html')
