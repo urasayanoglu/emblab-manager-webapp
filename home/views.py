@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Announcement, BackgroundImage
+from .forms import FeedbackForm
+from django.contrib import messages
 
 
 def home(request):
@@ -69,3 +71,46 @@ def about(request):
     """
     # Render the about page template.
     return render(request, 'home/about.html')
+
+
+def feedback_view(request):
+    """
+    Handles the submission and display of the feedback form.
+
+    If the request is a POST request, the function validates the submitted form.
+    If valid, the feedback is saved, and the user is redirected to the About page
+    with a success message. For GET requests, the form is displayed, pre-filled
+    with the user's name and email if they are logged in.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Template:
+        home/feedback.html
+
+    Context:
+        form (FeedbackForm): The feedback form instance, either blank or pre-filled.
+    """
+    if request.method == 'POST':
+        # Instantiate the form with POST data and the current user.
+        form = FeedbackForm(request.POST, user=request.user)
+        if form.is_valid():
+            # Save the feedback to the database
+            form.save()
+            # Add a success message to notify the user
+            messages.success(request, 'Thank you for your feedback!')
+            # Redirect the user to the about page after submission
+            return redirect('about')
+    else:
+        # Pre-fill form if the user is logged in
+        initial_data = {}
+        if request.user.is_authenticated:
+            initial_data = {
+                # User model has `first_name` and `last_name` ; it comes from Django's built-in User model
+                'name': request.user.get_full_name(),  # Combines first_name and last_name
+                'email': request.user.email,  # Prefills email from the user's profile
+            }
+        # Instantiate the form with initial data and the current user
+        form = FeedbackForm(initial=initial_data, user=request.user)
+    # Render the feedback form template with the form context
+    return render(request, 'home/feedback.html', {'form': form})
