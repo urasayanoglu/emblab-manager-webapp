@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Announcement, BackgroundImage
 
 
@@ -27,3 +27,26 @@ def home(request):
         'announcements': announcements,
         'background_images': background_images,
     })
+
+def announcement_detail(request, slug):
+    """
+        Renders the detail page for a specific announcement.
+
+        Fetches an announcement based on the provided slug. If no matching
+        announcement is found, a 404 error is raised.
+
+        Args:
+            request (HttpRequest): The HTTP request object.
+            slug (str): The slug of the announcement to fetch.
+
+        Context:
+            announcement (Announcement): The announcement object to display.
+
+        Template:
+            home/announcement-detail.html
+        """
+    # Fetch the announcement using the slug or return a 404 if not found.
+    announcement = get_object_or_404(Announcement, slug=slug)
+
+    # Render the announcement detail page with the fetched announcement.
+    return render(request, 'home/announcement-detail.html', {'announcement': announcement})
