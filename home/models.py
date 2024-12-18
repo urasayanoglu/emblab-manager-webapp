@@ -59,7 +59,7 @@ class BackgroundImage(models.Model):
         If no description is provided, returns a placeholder text.
         """
         return self.description if self.description else "Background Image"
-    
+
     class Meta:
         """
         Metadata for the BackgroundImage model.
@@ -70,3 +70,37 @@ class BackgroundImage(models.Model):
         """
         verbose_name = "Background Image"
         verbose_name_plural = "Background Images"
+
+
+class UserFeedback(models.Model):
+    """
+    Model representing feedback provided by users.
+
+    Attributes:
+        name (str): The name of the user providing the feedback. Optional.
+        email (str): The email address of the user. Optional.
+        message (str): The feedback message provided by the user. Required.
+        created_at (datetime): The timestamp when the feedback was created. Automatically set when a feedback entry is created.
+    """
+    name = models.CharField(max_length=100, blank=True, null=True)
+    email = models.EmailField(max_length=100, blank=True, null=True)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """
+        Returns a string representation of the feedback.
+        If the user's name is not provided, 'Anonymous' is used instead.
+        """
+        return f"Feedback from {self.name or 'Anonymous'} on {self.created_at.strftime('%d-%m-%Y')}"
+
+    class Meta:
+        """
+        Metadata for the UserFeedback model.
+
+        Attributes:
+            verbose_name (str): The singular name of the model, used in the Django admin interface.
+            verbose_name_plural (str): The plural name of the model, used in the Django admin interface.
+        """
+        verbose_name = "User Feedback"
+        verbose_name_plural = "User Feedback"
