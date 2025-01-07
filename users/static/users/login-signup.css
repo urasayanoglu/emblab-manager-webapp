@@ -1,0 +1,90 @@
+/* General Container Styling for Login/Signup */
+.login-container,
+.signup-container {
+    width: 80%; 
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+/* Heading Styling */
+.login-container h2,
+.signup-container h2 {
+    font-size: 2em;
+    color: #007bff;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Label Styling */
+.form-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #007bff;
+}
+
+/* Input Field Styling */
+.login-container input[type="text"],
+.login-container input[type="password"],
+.signup-container input[type="text"],
+.signup-container input[type="password"],
+.signup-container input[type="email"] {
+    width: 40%; 
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #f8f9fa; 
+}
+
+/* Hint Text Styling */
+.form-hint {
+    font-size: 0.9em;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+/* Submit Button Styling */
+.btn-primary {
+    align-self: center;
+    padding: 12px 24px;
+    border-radius: 6px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: fit-content;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Signup Link Styling */
+.signup-link {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 1em;
+    color: #333;
+}
+
+.signup-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}

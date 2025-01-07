@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'users/login-signup.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="signup-container">
+    <h2>Sign Up</h2>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="{{ form.username.id_for_label }}" class="form-label">{{ form.username.label }}</label>
+        {{ form.username }}
+        {% if form.username.help_text %}
+            <small class="form-hint">{{ form.username.help_text }}</small>
+        {% endif %}
+      </div>
+      
+      <div class="form-group">
+        <label for="{{ form.password1.id_for_label }}" class="form-label">{{ form.password1.label }}</label>
+        {{ form.password1 }}
+        {% if form.password1.help_text %}
+            <small class="form-hint">{{ form.password1.help_text }}</small>
+        {% endif %}
+      </div>
+      
+      <div class="form-group">
+        <label for="{{ form.password2.id_for_label }}" class="form-label">{{ form.password2.label }}</label>
+        {{ form.password2 }}
+        {% if form.password2.help_text %}
+            <small class="form-hint">{{ form.password2.help_text }}</small>
+        {% endif %}
+      </div>
+      
+      <button type="submit" class="btn-primary">Sign Up</button>
+    </form>
+  </div>
+{% endblock %}
