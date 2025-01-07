@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}TUAS Embedded Lab Manager{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'home/home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="home-container">
+        <!-- Slideshow of Background Images -->
+        <div class="slideshow-container">
+            <div class="slides-wrapper">
+                {% for image in background_images %}
+                <div class="slides">
+                    <img src="{{ image.image.url }}" alt="{{ image.description }}">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Announcement Section -->
+        <div class="announcement-container">
+            <h2>Announcements</h2>
+            <ul class="announcement-list">
+                {% for announcement in announcements %}
+                <li>
+                    <h3><a href="{{ announcement.get_absolute_url }}">{{ announcement.title }} - {{ announcement.date }}</a></h3>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
