@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About TUAS Embedded Lab Manager{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'home/about.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="home-container">
+        <h1>Welcome to TUAS Embedded Lab Manager</h1>
+        
+        <p class="intro-text">
+            TUAS Embedded Lab Manager is designed to streamline the management of resources within the Embedded Systems Lab at <a href="https://www.tuas.fi/en/" target="_blank" rel="noreferrer noopener">Turku University of Applied Sciences</a>. 
+            This application enables students and faculty to easily access lab resources, book lab spaces, and loan equipment for educational purposes.
+        </p>
+        
+        <h2>Core Features</h2>
+        <ul class="features-list">
+            <li><strong>Home:</strong> Provides quick navigation to other sections of the application.</li>
+            <li><strong>Inventory Management:</strong> Track and manage lab equipment, tools, and materials efficiently.</li>
+            <li><strong>Book Tables & Loan Inventory Items:</strong> Reserve lab tables and borrow essential equipment for projects or lab work.</li>
+            <li><strong>AI Server:</strong> Access AI-powered insights and assistance, integrating lab data for enhanced research and learning experiences.</li>
+            <li><strong>Resources:</strong> Discover learning aids and supplementary materials relevant to embedded systems and IoT.</li>
+        </ul>
+
+        <h2>Getting Started</h2>
+        <p>
+            To start using TUAS Embedded Lab Manager, navigate through the main menu at the top. Each section provides specific functionalities:
+        </p>
+        <ol class="usage-steps">
+            <li>Visit the <strong>Inventory</strong> section to browse available lab items, check specifications, notes and location of the item in the lab.</li>
+            <li>Use <strong>Book & Loan</strong> to reserve study tables or borrow equipment. Make sure to review the availability status before proceeding.</li>
+            <li>Access the <strong>AI Server</strong> for any assistance with lab data, allowing you to query the system and receive AI-powered responses.</li>
+            <li>Explore <strong>Resources</strong> for helpful guides, tutorials, and documentation that support your learning in embedded systems.</li>
+        </ol>
+
+        <h2>Support & Feedback</h2>
+        <p>
+            If you have questions or encounter any issues, please reach out through the <a href="{% url 'feedback' %}">feedback form</a> available here. We value feedback to improve the application and meet the needs of our staff and students.
+        </p>
+    </div>
+{% endblock %}
