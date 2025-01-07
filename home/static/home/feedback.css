@@ -1,0 +1,79 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Feedback Container Styles */
+.feedback-container {
+    width: 80%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.feedback-container h1 {
+    font-size: 1.4em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.feedback-container p {
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+.feedback-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+}
+
+/* Style for form labels */
+.feedback-container label {
+    font-weight: bold;         
+    color: #333;               
+    margin-bottom: 5px;        
+    display: block; 
+}
+
+
+/* Input and Textarea Styles */
+.feedback-container input[type="text"],
+.feedback-container input[type="email"],
+.feedback-container textarea {
+    width: 100%;  
+    padding: 12px; 
+    margin-top: 5px;
+    border-radius: 6px; 
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #f8f9fa; 
+}
+
+/* Textarea Specific Styling */
+.feedback-container textarea {
+    height: 150px; 
+    resize: vertical; /* Allow users to resize only vertically */
+}
+
+/* Button Styling */
+.feedback-container button {
+    align-self: center; 
+    padding: 12px 24px; 
+    border-radius: 4px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s; 
+}
+
+.feedback-container button:hover {
+    background-color: #0056b3;
+}
