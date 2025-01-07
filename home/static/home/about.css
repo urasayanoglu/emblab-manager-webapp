@@ -1,0 +1,78 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Home Container Styles */
+.home-container {
+    width: 80%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    overflow: hidden; /* Ensures that content is contained */
+}
+
+.home-container h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.home-container p {
+    margin-bottom: 10px;
+}
+
+.about-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.intro-text {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.intro-text a {
+    text-decoration: none;
+    color: #333;
+    
+}
+
+.intro-text a:link {
+    color: #333;
+}
+
+.intro-text a:visited {
+    color: #666;
+}
+
+.intro-text a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+.intro-text a:active {
+    color: #444;
+}
+
+.features-list, .usage-steps {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.features-list li, .usage-steps li {
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: #333;
+}
