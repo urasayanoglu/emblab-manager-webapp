@@ -1,0 +1,30 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Annoucement detail styles */
+.announcement-detail {
+    width: 80%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    overflow: hidden; /
+}
+
+.announcement-detail h1 {
+    font-size: 2em;
+    color: #333;
+}
+
+.announcement-detail p {
+    font-size: 1.2em;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
