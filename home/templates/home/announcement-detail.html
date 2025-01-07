@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ announcement.title }} - TUAS Embedded Lab Manager
+{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'home/announcement-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="announcement-detail">
+        <h1>{{ announcement.title }}</h1>
+        <p><strong>Date:</strong> {{ announcement.date }}</p>
+        <div class="announcement-description">
+            {{ announcement.description }}
+        </div>
+    </div>
+{% endblock %}
