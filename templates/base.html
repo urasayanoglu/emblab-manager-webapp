@@ -20,13 +20,13 @@
     <header>
         <nav class="navbar">
             <div class="navbar-container">
-                <a class="navbar-brand" href="#" title="Click here to read how to navigate and function through TUAS Embedded Lab Manager.">TUAS Embedded Lab Manager</a>
+                <a class="navbar-brand" href="{% url 'about' %}" title="Click here to read how to navigate and function through TUAS Embedded Lab Manager.">TUAS Embedded Lab Manager</a>
                 <input type="checkbox" id="navbar-toggle" class="navbar-toggle">
                 <label for="navbar-toggle" class="navbar-icon">&#9776;</label>
 
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Inventory</a>
