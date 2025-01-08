@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'aiserver/ai-server.css' %}">
+{% endblock %}
+
+{% block title %}EmbLab Local AI{% endblock %}
+
+{% block content %}
+    <div class="ai-server-container">
+        <!-- Two-Column Layout -->
+        <div class="ai-server-main-content">
+            <!-- Left Section: Model Selection and User Input Form -->
+            <div class="ai-server-left">
+                <form method="POST" class="ai-server-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="modelSelect">Select AI Model:</label>
+                        <select id="modelSelect" name="model" class="form-control">
+                            {% for model in models %}
+                                <option value="{{ model }}">{{ model }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="userInput">Your Message:</label>
+                        <textarea id="userInput" name="input" class="form-control" placeholder="Enter your message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send</button>
+                </form>
+            </div>
+
+            <!-- Right Section: AI Response Display -->
+            <div class="ai-server-right">
+                {% if ai_response %}
+                    <div id="aiResponse" class="response-box">
+                        <h3>AI Response:</h3>
+                        <p>{{ ai_response|linebreaksbr }}</p>
+                    </div>
+                {% else %}
+                    <p>Please select a model and enter your message to get started.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
