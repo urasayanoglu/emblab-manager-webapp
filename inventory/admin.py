@@ -28,6 +28,3 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ("parent_category",)  # Adding filter by parent category
     prepopulated_fields = {'slug': ('name',)}
 
-
-admin.site.register(InventoryItem, InventoryItemAdmin)
-admin.site.register(Category, CategoryAdmin)
