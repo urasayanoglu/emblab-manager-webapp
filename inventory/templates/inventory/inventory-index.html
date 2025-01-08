@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'inventory/inventory-index.css' %}">
+{% endblock %}
+
+{% block title %}Embedded Lab Inventory{% endblock %}
+
+{% block content %}
+    <div class="inventory-container">
+        <!-- Search Form -->
+        <form method="GET" action="{% url 'inventory-category-list' %}" class="search-form">
+            <div class="search-left">
+                <input type="text" class="form-control" name="search" placeholder="Search inventory..." value="{{ search_query|default_if_none:'' }}">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+
+        <!-- Two-column layout for categories and inventory detail -->
+        <div class="inventory-main-content">
+            <!-- Left Section: Category/Subcategory/Items List -->
+            <div class="inventory-left">
+                <ul class="category-list">
+                    {% if subcategories %}
+                        <!-- Display Subcategories -->
+                        {% for subcategory in subcategories %}
+                            <li>
+                                <a href="?category={{ subcategory.slug }}">{{ subcategory.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% elif items %}
+                        <!-- Display Items in the Selected Category or Search Results -->
+                        {% for item in items %}
+                            <li>
+                                <a href="?item={{ item.id }}{% if selected_category %}&category={{ selected_category.slug }}{% endif %}">{{ item.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Display Top-Level Categories -->
+                        {% for category in categories %}
+                            <li>
+                                <a href="?category={{ category.slug }}">{{ category.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+                <div class="category-button-div">
+                    <!-- Back to Top Category Button -->
+                    {% if selected_category %}
+                        <a href="?category={{ selected_category.parent_category.slug }}" class="category-button">Back</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Right Section: Inventory Detail -->
+            <div class="inventory-right">
+                {% if selected_item %}
+                    <div class="inventory-details">
+                        <div class="image-specs-flex">
+                            {% if selected_item.image %}
+                                <div class="image-flex">
+                                    <img class="inventory-image" src="{{ selected_item.image.url }}" alt="{{ selected_item.name }}">
+                                </div>
+                            {% endif %}
+                            <div class="item-details">
+                                <h3>{{ selected_item.name }}</h3>
+                                <p><strong>Location:</strong> <a href="/media/images/lab-layout/emblab_layout.png" alt="EmbeddedLabBlueprint" target="_blank" rel="noreferrer noopener">{{ selected_item.location }}</a></p>
+                                {% if selected_item.serial_number %}
+                                    <p><strong>Serial Number:</strong> {{ selected_item.serial_number }}</p>
+                                {% endif %}
+                                {% if selected_item.mac_address %}
+                                    <p><strong>MAC Address:</strong> {{ selected_item.mac_address }}</p>
+                                {% endif %}
+                                {% if selected_item.quantity %}
+                                    <p><strong>Quantity:</strong> {{ selected_item.quantity }}</p>
+                                {% endif %}
+                                <p><strong>Specs:</strong><br>{{ selected_item.specs|linebreaksbr }}</p>
+                                {% if selected_item.official_link %}
+                                    <p><strong>Official Page:</strong> <a href="{{ selected_item.official_link }}" target="_blank" rel="noopener noreferrer">{{ selected_item.name }}</a></p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="notes-flex">
+                            <p><strong>Notes:</strong> {{ selected_item.notes|linebreaksbr }}</p>
+                        </div>
+                    </div>
+
+                {% else %}
+                    <p>Please select an item to view details.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
