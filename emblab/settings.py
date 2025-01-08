@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'home', # home app
     'users', # users app
     'aiserver', # aiserver app
+    'inventory', # inventory app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
