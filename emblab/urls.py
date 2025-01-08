@@ -22,4 +22,5 @@ urlpatterns = [
     path("users/", include('users.urls')), # User authentication
     path("", include('home.urls')), # Home page
     path("ai/", include('aiserver.urls')), # AI server
+    path("inventory/", include('inventory.urls')), # Inventory
 ]
