@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'resources/resources.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="resource-container">
+        <!-- Two-Column Layout -->
+        <div class="resource-main-content">
+            <!-- Left Section: Categories/Subcategories List -->
+            <div class="resource-left">
+                <ul class="category-list">
+                    {% if subcategories %}
+                        <!-- Display Subcategories of the Selected Category -->
+                        {% for subcategory in subcategories %}
+                            <li><a href="?category={{ subcategory.slug }}">{{ subcategory.name }}</a></li>
+                        {% endfor %}
+                    {% elif resources %}
+                        <!-- Display Resources in the Selected Subcategory -->
+                        {% for resource in resources %}
+                            <li><a href="?resource={{ resource.id }}&category={{ selected_category.slug }}">{{ resource.title }}</a></li>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Display Main Categories -->
+                        {% for category in categories %}
+                            <li><a href="?category={{ category.slug }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+                <div class="category-button-div">
+                    <!-- Back to Top Category Button -->
+                    {% if selected_category %}
+                        <a href="?category={{ selected_category.parent_category.slug }}" class="category-button">Back</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Right Section: Resource Detail View -->
+            <div class="resource-right">
+                {% if selected_resource %}
+                    <h3>{{ selected_resource.title }}</h3>
+                    <p><strong>Type:</strong> {{ selected_resource.get_type_display }}</p>
+                    {% if selected_resource.link %}
+                        <p><strong>Link:</strong> <a href="{{ selected_resource.link }}" target="_blank" rel="noreferrer noopener">View {{ selected_resource.title}}</a></p>
+                    {% endif %}
+                    <p><strong>Description:</strong> {{ selected_resource.description|linebreaksbr }}</p>
+                {% else %}
+                    <p>Please select a resource to view details.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
