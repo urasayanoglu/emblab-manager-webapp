@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'aiserver', # aiserver app
     'inventory', # inventory app
     'bookloan', # bookloan app
+    'resources', # resources app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
