@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'bookloan/bookloan.css' %}">
+{% endblock %}
+
+{% block title %}Book a Table & Loan Items{% endblock %}
+
+{% block content %}
+    <div class="bookloan-container">
+        <!-- Top Links for My Bookings and My Loans -->
+        {% if user.is_authenticated %}
+            <div class="user-links">
+                <a href="{% url 'booking-list' %}">My Bookings</a> |
+                <a href="{% url 'loan-list' %}">My Loans</a>
+            </div>
+        {% endif %}
+
+        <!-- Main Content - Two Sections: Table Booking and Loan Items -->
+        <div class="bookloan-main-content">
+            <!-- Left Section: Table Booking (3x3 Grid) -->
+            <div class="booking-section">
+                <h3>Book a Table</h3>
+                <div class="table-grid">
+                    {% for table_info in tables_availability %}
+                        <div class="table {% if table_info.color == 'green' %}available{% else %}booked{% endif %}">
+                            <p>Table {{ table_info.table.number }}</p>
+                            {% if user.is_authenticated and table_info.color == 'green' %}
+                                <form method="GET" action="{% url 'bookloan' %}">
+                                    <input type="hidden" name="table_number" value="{{ table_info.table.number }}">
+                                    <button type="submit" class="select-table-btn">Select Table</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if not user.is_authenticated %}
+                    <p><a href="{% url 'login' %}">Log in</a> to book a table.</p>
+                {% endif %}
+            </div>
+
+            <!-- Right Section: Loan Items -->
+            <div class="loan-section">
+                <h3>Loan an Item</h3>
+                <form method="GET" action="{% url 'bookloan' %}" class="search-form">
+                    <div class="search-left">
+                        <input type="text" class="form-control" name="search" placeholder="Search loanable items..." value="{{ search_query|default_if_none:'' }}">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+                <ul class="category-list">
+                    {% if subcategories %}
+                        <!-- Display Subcategories -->
+                        {% for subcategory in subcategories %}
+                            <li>
+                                <a href="?category={{ subcategory.slug }}">{{ subcategory.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% elif items %}
+                        <!-- Display Items in the Selected Category or Search Results -->
+                        {% for item in items %}
+                            <li>
+                                <a href="?item={{ item.id }}{% if selected_category %}&category={{ selected_category.slug }}{% endif %}">{{ item.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Display Top-Level Categories -->
+                        {% for category in categories %}
+                            <li>
+                                <a href="?category={{ category.slug }}">{{ category.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Selected Table Booking Section -->
+        {% if selected_table_number %}
+            <div class="booking-details-section">
+                <h4>You are about to make a booking on Table {{ selected_table_number }}</h4>
+                
+                <div class="booking-details-main-content">
+                    <!-- Left Section: Booking Start and End -->
+                    <div class="booking-form-section">
+                        {% if user.is_authenticated %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="table_number" value="{{ selected_table_number }}">
+                                <div class="form-group">
+                                    <label for="bookingStart">Booking Start (Hourly):</label>
+                                    <input type="datetime-local" id="bookingStart" name="booking_start" class="form-control" step="3600" required min="{{ today|date:'Y-m-d' }}T07:00">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bookingEnd">Booking End (Hourly):</label>
+                                    <input type="datetime-local" id="bookingEnd" name="booking_end" class="form-control" step="3600" required min="{{ today|date:'Y-m-d' }}T07:00" max="{{ today|date:'Y-m-d' }}T18:00">
+                                </div>
+                                <button type="submit" class="submit-btn">Book Table</button>
+                            </form>
+                        {% else %}
+                            <p><a href="{% url 'login' %}">Log in</a> to complete the booking.</p>
+                        {% endif %}
+                    </div>
+        
+                    <!-- Right Section: Available Slots Visualization -->
+                    <div class="availability-slots-section">
+                        <h5>Available Slots for the Selected Day:</h5>
+                        <div id="available-slots" class="slots-grid">
+                            {% for table_info in tables_availability %}
+                                {% if table_info.table.number == selected_table_number %}
+                                    {% for slot in table_info.availability %}
+                                        <div class="slot available-slot">{{ slot.0 }} - {{ slot.1 }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    
+
+        <!-- Inventory Details / Loan Item Details -->
+        <div class="loan-detail-section">
+            {% if selected_item %}
+                <div class="loan-details">
+                    <h3>{{ selected_item.name }}</h3>
+                    {% if user.is_authenticated %}
+                        <form method="POST" class="loan-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ selected_item.id }}">
+                            <div class="form-group">
+                                <label for="loanStart">Loan Start:</label>
+                                <input type="date" id="loanStart" name="loan_start" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="returnDue">Return Day:</label>
+                                <input type="date" id="returnDue" name="return_due" class="form-control" required>
+                            </div>
+                            <button type="submit" class="submit-btn">Loan Item</button>
+                        </form>
+                    {% else %}
+                        <p><a href="{% url 'login' %}">Log in</a> to loan an item.</p>
+                    {% endif %}
+                </div>
+            {% else %}
+                <p>Select a table or item to view details and proceed with booking/loaning.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

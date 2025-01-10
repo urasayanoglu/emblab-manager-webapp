@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'bookloan/booking-loan-list.css' %}">
+{% endblock %}
+
+{% block title %}My Loans{% endblock %}
+
+{% block content %}
+    <div class="bookloan-container">
+        <h3>My Loans</h3>
+        {% if loans %}
+            <table class="loan-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Loan Start</th>
+                        <th>Return Due</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for loan in loans %}
+                        <tr>
+                            <td>{{ loan.item.name }}</td>
+                            <td>{{ loan.loan_start|date:"D, d M Y" }}</td>
+                            <td>{{ loan.return_due|date:"D, d M Y" }}</td>
+                            <td>
+                                {% if loan.is_confirmed %}
+                                    {% if loan.is_returned %}Returned{% else %}Active{% endif %}
+                                {% else %}
+                                    Pending
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if not loan.is_confirmed %}
+                                    <a href="{% url 'edit-loan' loan.pk %}" class="btn btn-primary">Edit</a>
+                                    <a href="{% url 'cancel-loan' loan.pk %}" class="btn btn-danger">Cancel</a>
+                                {% elif loan.is_confirmed and not loan.is_returned %}
+                                    <a href="{% url 'return-loan' loan.pk %}" class="btn btn-success">Return</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You have no loans at the moment.</p>
+        {% endif %}
+    </div>
+{% endblock %}

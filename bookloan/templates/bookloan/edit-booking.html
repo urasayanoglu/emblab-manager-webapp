@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'bookloan/booking-loan-edit.css' %}">
+{% endblock %}
+
+{% block title %}Edit Booking{% endblock %}
+
+{% block content %}
+    <div class="bookloan-container">
+        <div class="booking-details-section">
+            <h4>Edit Booking for Table {{ booking.table.number }}</h4>
+            <h5>Current Booking Details:</h5>
+            <ul>
+                <li><strong>Day:</strong> {{ booking.booking_start|date:'D, d M Y' }}</li>
+                <li><strong>Start Time:</strong> {{ booking.booking_start|date:'H:i' }}</li>
+                <li><strong>End Time:</strong> {{ booking.booking_end|date:'H:i' }}</li>
+            </ul>
+            {% if user.is_authenticated %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="table_number" value="{{ booking.table.number }}">
+                    <div class="form-group">
+                        <label for="bookingStart">Booking Start (Hourly):</label>
+                        <input type="datetime-local" id="bookingStart" name="booking_start" class="form-control" value="{{ booking.booking_start|date:'Y-m-d\\TH:i' }}" step="3600" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingEnd">Booking End (Hourly):</label>
+                        <input type="datetime-local" id="bookingEnd" name="booking_end" class="form-control" value="{{ booking.booking_end|date:'Y-m-d\\TH:i' }}" step="3600" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Update Booking</button>
+                </form>
+            {% else %}
+                <p><a href="{% url 'login' %}">Log in</a> to edit the booking.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'bookloan/booking-loan-list.css' %}">
+{% endblock %}
+
+{% block title %}My Bookings{% endblock %}
+
+{% block content %}
+    <div class="bookloan-container">
+        <h3>My Bookings</h3>
+        {% if bookings %}
+            <table class="booking-table">
+                <thead>
+                    <tr>
+                        <th>Table</th>
+                        <th>Booking Start</th>
+                        <th>Booking End</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>Table {{ booking.table.number }}</td>
+                            <td>{{ booking.booking_start|date:"D, d M Y H:i" }}</td>
+                            <td>{{ booking.booking_end|date:"D, d M Y H:i" }}</td>
+                            <td>{% if booking.is_confirmed %}Confirmed{% else %}Pending{% endif %}</td>
+                            <td>
+                                {% if booking.booking_start > now %}
+                                    <a href="{% url 'edit-booking' booking.pk %}" class="btn btn-primary">Edit</a>
+                                    <a href="{% url 'cancel-booking' booking.pk %}" class="btn btn-danger">Cancel</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You have no bookings at the moment.</p>
+        {% endif %}
+    </div>
+{% endblock %}

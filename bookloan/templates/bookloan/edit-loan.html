@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'bookloan/booking-loan-edit.css' %}">
+{% endblock %}
+
+{% block title %}Edit Loan{% endblock %}
+
+{% block content %}
+    <div class="bookloan-container">
+        <div class="loan-details-section">
+            <h4>Edit Loan for Item: {{ loan.item.name }}</h4>
+            <h5>Current Loan Details:</h5>
+            <ul>
+                <li><strong>Loan Start:</strong> {{ loan.loan_start|date:'D, d M Y' }}</li>
+                <li><strong>Return Due:</strong> {{ loan.return_due|date:'D, d M Y' }}</li>
+                <li><strong>Status:</strong> {% if loan.is_confirmed %}Confirmed{% else %}Pending{% endif %}</li>
+            </ul>
+            {% if user.is_authenticated %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_id" value="{{ loan.item.id }}">
+                    <div class="form-group">
+                        <label for="loanStart">Loan Start:</label>
+                        <input type="date" id="loanStart" name="loan_start" class="form-control" value="{{ loan.loan_start|date:'Y-m-d' }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="returnDue">Return Due:</label>
+                        <input type="date" id="returnDue" name="return_due" class="form-control" value="{{ loan.return_due|date:'Y-m-d' }}" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Update Loan</button>
+                </form>
+            {% else %}
+                <p><a href="{% url 'login' %}">Log in</a> to edit the loan.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
