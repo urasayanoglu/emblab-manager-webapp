@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls), # Admin site
-    path("users/", include('users.urls')), # User authentication
-    path("", include('home.urls')), # Home page
-    path("ai/", include('aiserver.urls')), # AI server
-    path("inventory/", include('inventory.urls')), # Inventory
-    path("book-loan/", include('bookloan.urls')), # Booking Tables and Loaning Inventory
+    path('admin/', admin.site.urls),  # Admin site
+    path("users/", include('users.urls')),  # User authentication
+    path("", include('home.urls')),  # Home page
+    path("ai/", include('aiserver.urls')),  # AI server
+    path("inventory/", include('inventory.urls')),  # Inventory
+    # Booking Tables and Loaning Inventory
+    path("book-loan/", include('bookloan.urls')),
+    # Resources (e.g. books, tutorials, videos, etc.)
+    path('resources/', include('resources.urls')),
 ]
