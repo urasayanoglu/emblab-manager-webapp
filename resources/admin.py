@@ -21,9 +21,9 @@ class ResourceAdmin(admin.ModelAdmin):
     Admin configuration for Resource.
     """
     list_display = ("title", "category",
-                    "type")  # Display title, category, and type
+                    "type", "link")  # Display title, category, and type
     # Enable search by title and description
-    search_fields = ("title", "description")
+    search_fields = ("title", "description", "link")
     list_filter = ("category", "type")  # Add filters for category and type
     # Automatically populate slug field
     prepopulated_fields = {"slug": ("title",)}
