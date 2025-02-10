@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - ./staticfiles:/app/staticfiles
+      - ./media:/app/media
+    environment:
+      - DEBUG=False
+      - DOCKERIZED=true
+      - POSTGRES_DB=emblab
+      - POSTGRES_USER=emblab_admin
+      - POSTGRES_PASSWORD=20Ua21Ha
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: emblab
+      POSTGRES_USER: emblab_admin
+      POSTGRES_PASSWORD: 20Ua21Ha
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
